@@ -13,6 +13,10 @@ Output structures, implementation and samples to be used for the to be implement
 
 Just execute ```cargo run```
 
+* To get latest changes, either ```git pull origin main``` or ```make pull```
+
+
+
 
 <a name="history"></a>
 ### Change Log / Release Notes / History
@@ -23,5 +27,7 @@ Just execute ```cargo run```
 ------------------------------------
 #### Version 0.0.1
 
-
+* Added Functions to output.rs
+* Added samples to main.rs
+* Created Makefile to facilitate remote updates
 
