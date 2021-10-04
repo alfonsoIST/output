@@ -38,6 +38,7 @@ Just execute ```cargo run```
 ------------------------------------
 #### Versión 0.0.2
 
+* Added MIT license
 * Tested and small updates
 
 

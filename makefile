@@ -38,7 +38,7 @@ vars-help:
 	@printf " $(HEADER) make help        -$(COLORCYAN) shows this help $(COLOROFF) \n"
 	@printf " $(HEADER) make version     -$(COLORCYAN) shows current version of code $(COLOROFF) \n"
 
-GIT_ALWAYS_ADD = src config README.md makefile .gitignore
+GIT_ALWAYS_ADD = src config README.md makefile .gitignore LICENSE.md
 GITBRANCH = $(shell basename $(shell git symbolic-ref HEAD))
 COMMITINFO =$(shell printf "$(COLORYELLOW)Branch:$(COLOROFF)$(GITBRANCH) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)From:$(COLOROFF)$(USERNAME)@$(HOSTNAME) - $(COLORYELLOW)Date:$(COLOROFF)$$(date +"%y-%m-%d %H:%M:%S")")
 TAGINFO =$(shell printf "$(COLORYELLOW)Tag:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Server:$(COLOROFF)$(HOSTNAME)")
