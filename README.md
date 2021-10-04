@@ -12,10 +12,11 @@ Output structures, implementation and samples to be used for the to be implement
 <a name="start"></a>
 ### Getting Started
 
-* You will need Rust lang. Installation instructions found [here](https://www.rust-lang.org/tools/install)
-
+* You will need **Rust lang** and **git**
+* Installation instructions for *Rust* found [here](https://www.rust-lang.org/tools/install)
+* Installation instructions for *git* found [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* Then clone this repository: ```git clone https://github.com/alfonsoIST/output.git```
 * Tu run the example, Just execute ```cargo run```
-
 * To get latest changes, either ```git pull origin main``` or ```make pull```
 
 
