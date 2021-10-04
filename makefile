@@ -16,45 +16,32 @@ HEADER = $(shell printf "$(COLORYELLOW) [make] $(COLOROFF)")
 INFO = $(shell printf "$(COLORYELLOW) [INFO] $(COLOROFF)")
 ERROR = $(shell printf "$(COLORRED) [ERROR] $(COLOROFF)")
 OK = $(shell printf "$(COLORGREEN) [OK] $(COLOROFF)")
-MKDIR = mkdir -p
-SRC_DIR = $(REPO_HOME)/src
-HELP += version vars-help
-RULE = $@
-RULE_NAME = $(RULE:-rule=)
+GIT_ALWAYS_ADD = src config README.md makefile .gitignore LICENSE.md
+GITBRANCH = $(shell basename $(shell git symbolic-ref HEAD))
+COMMITINFO =$(shell printf "$(COLORYELLOW)Branch:$(COLOROFF)$(GITBRANCH) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)From:$(COLOROFF)$(USERNAME)@$(HOSTNAME) - $(COLORYELLOW)Date:$(COLOROFF)$$(date +"%y-%m-%d %H:%M:%S")")
+TAGINFO =$(shell printf "$(COLORYELLOW)Tag:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Server:$(COLOROFF)$(HOSTNAME)")
+tag: show-build-version git-add git-create-commit  git-create-tag git-start-push-tag git-end-push-tag
+commit: show-build-version git-add git-create-commit
+git: commit
+push: commit git-push-origin-start git-main-push-end
+pull: git-pull-origin-start git-main-pull-end
 
 .ONESHELL:
 
-auto: help
-
-help: $(HELP)
 
 version: show-build-version
+auto: show-build-version
 
 show-build-version:
 	@printf " $(HEADER) Code version:$(COLORCYAN) $(REPO_VERSION)$(COLOROFF) - Current Git repo: $(COLORGREEN)$(CURRENT_GIT_REPO)$(COLORYELLOW) [INFO] $(COLOROFF) \n"
 
 
-vars-help: 
+help: 
 	@printf " $(HEADER) make help        -$(COLORCYAN) shows this help $(COLOROFF) \n"
 	@printf " $(HEADER) make version     -$(COLORCYAN) shows current version of code $(COLOROFF) \n"
+	@printf " $(HEADER) make push        -$(COLORCYAN) creates automatic commit and pushes all changes to remote$(COLOROFF) \n"
+	@printf " $(HEADER) make pull        -$(COLORCYAN) Pulls all changes from remote branch $(COLORGREEN)$(GITBRANCH)$(COLOROFF) \n"
 
-GIT_ALWAYS_ADD = src config README.md makefile .gitignore LICENSE.md
-GITBRANCH = $(shell basename $(shell git symbolic-ref HEAD))
-COMMITINFO =$(shell printf "$(COLORYELLOW)Branch:$(COLOROFF)$(GITBRANCH) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)From:$(COLOROFF)$(USERNAME)@$(HOSTNAME) - $(COLORYELLOW)Date:$(COLOROFF)$$(date +"%y-%m-%d %H:%M:%S")")
-TAGINFO =$(shell printf "$(COLORYELLOW)Tag:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Version:$(COLOROFF)$(REPO_VERSION) - $(COLORYELLOW)Server:$(COLOROFF)$(HOSTNAME)")
-HELP += git-help
-help: $(HELP)
-tag: show-build-version git-add git-create-commit  git-create-tag git-start-push-tag git-end-push-tag
-commit: show-build-version git-add git-create-commit
-git: commit
-
-
-
-HELP += main-help
-help: $(HELP)
-
-push: commit git-push-origin-start git-main-push-end
-pull: git-pull-origin-start git-main-pull-end
 
 git-push-origin-start:
 	@printf " $(HEADER) git push origin $(GITBRANCH) - $(REPO_VERSION) " 
@@ -69,10 +56,6 @@ git-main-push-end:
 
 git-main-pull-end:
 	@printf "$(COLORGREEN)[DONE] $(COLOROFF)\n"
-
-main-help:
-	@printf " $(HEADER) make push        -$(COLORCYAN) creates automatic commit and pushes all changes to remote$(COLOROFF) \n"
-	@printf " $(HEADER) make pull        -$(COLORCYAN) Pulls all changes from remote branch $(COLORGREEN)$(GITBRANCH)$(COLOROFF) \n"
 
 git-add:
 	@printf " $(HEADER) git add $(COLORCYAN)$(GIT_ALWAYS_ADD) $(COLOROFF) "
@@ -93,16 +76,6 @@ git-create-commit:
 	@printf " $(HEADER) git commit - $(COMMITINFO) " 
 	@git commit -m "Auto make commit - Branch:$(GITBRANCH) - Version:$(REPO_VERSION) - From:$(USERNAME)@$(HOSTNAME) - Date:$$(date +"%Y-%m-%d %H:%M:%S")" >/dev/null
 	@printf "$(COLORGREEN)[DONE] $(COLOROFF)\n"
-
-push-vim:
-	@git add $(GIT_ALWAYS_ADD) 2>&1 >/dev/null
-	@git commit -m "Auto vim make commit - Branch:$(GITBRANCH) - Version:$(REPO_VERSION) - From:$(USERNAME)@$(HOSTNAME) - Date:$$(date +"%Y-%m-%d %H:%M:%S")" 2>&1 >/dev/null
-	@git_result=$$(git push origin $(GITBRANCH) 2>/dev/null; echo $$? ); \
-	if [ $$git_result -eq 0 ] ; then \
-		printf "OK";\
-	else \
-	printf "ERROR"; \
-	fi
 
 git-help:
 	@printf " $(HEADER) make commit      -$(COLORCYAN) creates a git commit - does not push to origin  $(COLOROFF) \n"
