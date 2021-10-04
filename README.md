@@ -1,5 +1,6 @@
 -----------------------
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+[![version](https://img.shields.io/badge/version-0.0.2-yellow.svg)](https://semver.org)
 ## Repository: **output**<br>
 ###### [[Version History]](#history) [[Open Tasks]](#open) [[Getting Started]](#start)
 -----------------------
@@ -30,4 +31,14 @@ Just execute ```cargo run```
 * Added Functions to output.rs
 * Added samples to main.rs
 * Created Makefile to facilitate remote updates
+
+------------------------------------
+#### lun 04 oct 2021 12:19:42 CEST
+#### Last updated: alfonso@sysdev-qa
+------------------------------------
+#### Versión 0.0.2
+
+* Tested and small updates
+
+
 
